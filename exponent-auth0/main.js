@@ -37,7 +37,6 @@ class App extends React.Component {
       <View style={styles.container}>
         <Text style={styles.title}>Example: Auth0 login</Text>
         <Button title="Login with Auth0" onPress={this._loginWithAuth0}/>
-
       </View>
     );
   }

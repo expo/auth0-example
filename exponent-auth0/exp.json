@@ -3,7 +3,7 @@
   "description": "An empty new project",
   "slug": "exponent-auth0",
   "privacy": "public",
-  "sdkVersion": "13.0.0",
+  "sdkVersion": "UNVERSIONED",
   "version": "1.0.0",
   "orientation": "portrait",
   "primaryColor": "#cccccc",
