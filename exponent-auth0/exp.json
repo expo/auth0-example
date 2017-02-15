@@ -1,15 +1,15 @@
 {
   "name": "exponent-auth0",
-  "description": "An empty new project",
+  "description": "An example project demonstrating how to authenticate with Auth0 using Exponent's WebBrowser module",
   "slug": "exponent-auth0",
   "privacy": "public",
   "sdkVersion": "14.0.0",
   "version": "1.0.0",
   "orientation": "portrait",
   "primaryColor": "#cccccc",
-  "icon": "https://s3.amazonaws.com/exp-brand-assets/ExponentEmptyManifest_192.png",
+  "icon": "./icon.png",
   "loading": {
-    "icon": "https://s3.amazonaws.com/exp-brand-assets/ExponentEmptyManifest_192.png",
+    "icon": "./icon.png",
     "hideExponentText": false
   },
   "packagerOpts": {

@@ -9,8 +9,19 @@ import {
 } from 'react-native';
 import jwtDecoder from 'jwt-decode';
 
-const redirect_uri = 'exp://e8-j5w.charlesvinette.exponent-auth0.exp.direct/+/redirect';
-const auth0_client_id = 'pdnNOE8axmLRPk6opnr6pSbIxmFJxAlA';
+let redirectUri;
+if (Exponent.Constants.manifest.xde) {
+  // Hi there, dear reader!
+  // This value needs to be the tunnel url for your local Exponent project.
+  // It also needs to be listed in valid callback urls of your Auth0 Client
+  // Settings. See the README for more information.
+  redirectUri = `exp://iz-9cx.community.exponent-auth0.exp.direct/+/redirect`;
+} else {
+  redirectUri = `${Exponent.Constants.linkingUri}/redirect`;
+}
+
+const auth0ClientId = '5SyUscgqrnRJ6WW3Evv5MIZZLfHOQtE9';
+const auth0Domain = 'https://brentvatne.auth0.com';
 
 class App extends React.Component {
   state = {
@@ -21,24 +32,24 @@ class App extends React.Component {
   }
 
   _loginWithAuth0 = async () => {
-    const redirectionURL = 'https://charlesvinette.auth0.com/authorize' + this._toQueryString({
-      client_id: auth0_client_id,
+    const redirectionURL = `${auth0Domain}/authorize` + this._toQueryString({
+      client_id: auth0ClientId,
       response_type: 'token',
       scope: 'openid name',
-      redirect_uri,
-      state: redirect_uri,
+      redirect_uri: redirectUri,
+      state: redirectUri,
     });
     Exponent.WebBrowser.openBrowserAsync(redirectionURL);
   }
 
   _loginWithAuth0Twitter = async () => {
-    const redirectionURL = 'https://charlesvinette.auth0.com/authorize' + this._toQueryString({
-      client_id: auth0_client_id,
+    const redirectionURL = `${auth0Domain}/authorize` + this._toQueryString({
+      client_id: auth0ClientId,
       response_type: 'token',
       scope: 'openid name',
-      redirect_uri,
+      redirect_uri: redirectUri,
       connection: 'twitter',
-      state: redirect_uri,
+      state: redirectUri,
     });
     Exponent.WebBrowser.openBrowserAsync(redirectionURL);
   }
