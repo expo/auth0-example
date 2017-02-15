@@ -1,7 +1,6 @@
 import Exponent from 'exponent';
 import React from 'react';
 import {
-  NativeModules,
   StyleSheet,
   Text,
   View,
