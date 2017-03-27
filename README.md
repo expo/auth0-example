@@ -2,7 +2,7 @@ First, you need to create your application client on https://auth0.com/, and in 
 Exponent XDE gives us. For redirection purposes, we need to remove the port and add ```/+/redirect```
 at the end.
 
-![Imgur](http://i.imgur.com/PzH19e5.png =100x100)
+![Imgur](http://i.imgur.com/PzH19e5.png)
 
 So here, the callback URL will be ```exp://e8-j5w.charlesvinette.exponent-auth0.exp.direct/+/redirect```
 
