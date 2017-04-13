@@ -1,4 +1,4 @@
-import Exponent from 'exponent';
+import Expo from 'expo';
 import React from 'react';
 import {
   StyleSheet,
@@ -10,18 +10,18 @@ import {
 import jwtDecoder from 'jwt-decode';
 
 let redirectUri;
-if (Exponent.Constants.manifest.xde) {
+if (Expo.Constants.manifest.xde) {
   // Hi there, dear reader!
-  // This value needs to be the tunnel url for your local Exponent project.
+  // This value needs to be the tunnel url for your local Expo project.
   // It also needs to be listed in valid callback urls of your Auth0 Client
   // Settings. See the README for more information.
-  redirectUri = `exp://iz-9cx.community.exponent-auth0.exp.direct/+/redirect`;
+  redirectUri = 'exp://e8-j5w.charlesvinette.exponent-auth0.exp.direct/+/redirect';
 } else {
-  redirectUri = `${Exponent.Constants.linkingUri}/redirect`;
+  redirectUri = `${Expo.Constants.linkingUri}/redirect`;
 }
 
-const auth0ClientId = '5SyUscgqrnRJ6WW3Evv5MIZZLfHOQtE9';
-const auth0Domain = 'https://brentvatne.auth0.com';
+const auth0ClientId = 'pdnNOE8axmLRPk6opnr6pSbIxmFJxAlA';
+const auth0Domain = 'https://charlesvinette.auth0.com';
 
 class App extends React.Component {
   state = {
@@ -39,7 +39,7 @@ class App extends React.Component {
       redirect_uri: redirectUri,
       state: redirectUri,
     });
-    Exponent.WebBrowser.openBrowserAsync(redirectionURL);
+    Expo.WebBrowser.openBrowserAsync(redirectionURL);
   }
 
   _loginWithAuth0Twitter = async () => {
@@ -51,14 +51,15 @@ class App extends React.Component {
       connection: 'twitter',
       state: redirectUri,
     });
-    Exponent.WebBrowser.openBrowserAsync(redirectionURL);
+    Expo.WebBrowser.openBrowserAsync(redirectionURL);
   }
 
   _handleAuth0Redirect = async (event) => {
+    console.log('yo');
     if (!event.url.includes('+/redirect')) {
       return;
     }
-    Exponent.WebBrowser.dismissBrowser();
+    Expo.WebBrowser.dismissBrowser();
     const [, queryString] = event.url.split('#');
     const responseObj = queryString.split('&').reduce((map, pair) => {
       const [key, value] = pair.split('=');
@@ -111,4 +112,4 @@ const styles = StyleSheet.create({
   },
 });
 
-Exponent.registerRootComponent(App);
+Expo.registerRootComponent(App);

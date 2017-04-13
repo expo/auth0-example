@@ -1,13 +1,13 @@
 {
-  "name": "exponent-auth0",
+  "name": "expo-auth0",
   "version": "0.0.0",
   "description": "Hello Exponent!",
   "author": null,
   "private": true,
   "main": "main.js",
   "dependencies": {
-    "@exponent/vector-icons": "~4.0.0",
-    "exponent": "~14.0.0",
+    "@expo/vector-icons": "~4.0.0",
+    "expo": "~14.0.2",
     "jwt-decode": "^2.1.0",
     "react": "~15.4.0",
     "react-native": "git+https://github.com/exponentjs/react-native#sdk-14.0.0"

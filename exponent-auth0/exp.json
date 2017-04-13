@@ -1,7 +1,7 @@
 {
-  "name": "exponent-auth0",
+  "name": "expo-auth0",
   "description": "An example project demonstrating how to authenticate with Auth0 using Exponent's WebBrowser module",
-  "slug": "exponent-auth0",
+  "slug": "expo-auth0",
   "privacy": "public",
   "sdkVersion": "14.0.0",
   "version": "1.0.0",
