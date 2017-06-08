@@ -3,7 +3,7 @@
   "description": "An example project demonstrating how to authenticate with Auth0 using Exponent's WebBrowser module",
   "slug": "expo-auth0",
   "privacy": "public",
-  "sdkVersion": "14.0.0",
+  "sdkVersion": "17.0.0",
   "version": "1.0.0",
   "orientation": "portrait",
   "primaryColor": "#cccccc",
