@@ -34,7 +34,8 @@ class App extends React.Component {
   _loginWithAuth0 = async () => {
     const redirectionURL = `${auth0Domain}/authorize` + this._toQueryString({
       client_id: auth0ClientId,
-      response_type: 'token',
+      response_type: 'id_token',
+      nonce: 'alongrandomstringtopreventtokenreplayattacks',
       scope: 'openid name',
       redirect_uri: redirectUri,
       state: redirectUri,
@@ -45,7 +46,8 @@ class App extends React.Component {
   _loginWithAuth0Twitter = async () => {
     const redirectionURL = `${auth0Domain}/authorize` + this._toQueryString({
       client_id: auth0ClientId,
-      response_type: 'token',
+      response_type: 'id_token',
+      nonce: 'alongrandomstringtopreventtokenreplayattacks',
       scope: 'openid name',
       redirect_uri: redirectUri,
       connection: 'twitter',
