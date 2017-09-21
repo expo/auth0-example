@@ -28,7 +28,7 @@ class App extends React.Component {
     username: undefined,
   };
   componentDidMount() {
-    Linking.addEventListener('url', this._handleAuth0Redirect);
+    Linking.addEventListener('url', this._handleAuth0Redirect.bind(this));
   }
 
   _loginWithAuth0 = async () => {
