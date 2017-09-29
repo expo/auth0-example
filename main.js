@@ -1,84 +1,76 @@
-import Expo from 'expo';
+import Expo, { AuthSession } from 'expo';
 import React from 'react';
 import {
+  Alert,
+  Button,
   StyleSheet,
   Text,
   View,
-  Button,
-  Linking,
 } from 'react-native';
 import jwtDecoder from 'jwt-decode';
 
-let redirectUri;
-if (Expo.Constants.manifest.xde) {
-  // Hi there, dear reader!
-  // This value needs to be the tunnel url for your local Expo project.
-  // It also needs to be listed in valid callback urls of your Auth0 Client
-  // Settings. See the README for more information.
-  redirectUri = 'exp://e8-j5w.charlesvinette.exponent-auth0.exp.direct/+/redirect';
-} else {
-  redirectUri = `${Expo.Constants.linkingUri}/redirect`;
-}
-
 const auth0ClientId = 'pdnNOE8axmLRPk6opnr6pSbIxmFJxAlA';
 const auth0Domain = 'https://charlesvinette.auth0.com';
+
+  /**
+   * Converts an object to a query string.
+   */
+function toQueryString(params) {
+  return '?' + Object.entries(params)
+    .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`)
+    .join('&');
+}
 
 class App extends React.Component {
   state = {
     username: undefined,
   };
-  componentDidMount() {
-    Linking.addEventListener('url', this._handleAuth0Redirect);
-  }
 
   _loginWithAuth0 = async () => {
-    const redirectionURL = `${auth0Domain}/authorize` + this._toQueryString({
-      client_id: auth0ClientId,
-      response_type: 'token',
-      scope: 'openid name',
-      redirect_uri: redirectUri,
-      state: redirectUri,
+    const redirectUrl = AuthSession.getRedirectUrl();
+    const result = await AuthSession.startAsync({
+      authUrl: `${auth0Domain}/authorize` + toQueryString({
+        client_id: auth0ClientId,
+        response_type: 'token',
+        scope: 'openid name',
+        redirect_uri: redirectUrl,
+      }),
     });
-    Expo.WebBrowser.openBrowserAsync(redirectionURL);
+
+    console.log(result);
+    if (result.type === 'success') {
+      this.handleParams(result.params);
+    }
   }
 
   _loginWithAuth0Twitter = async () => {
-    const redirectionURL = `${auth0Domain}/authorize` + this._toQueryString({
-      client_id: auth0ClientId,
-      response_type: 'token',
-      scope: 'openid name',
-      redirect_uri: redirectUri,
-      connection: 'twitter',
-      state: redirectUri,
+    const redirectUrl = AuthSession.getRedirectUrl();
+    const result = await AuthSession.startAsync({
+      authUrl: `${auth0Domain}/authorize` + toQueryString({
+        connection: 'twitter',
+        client_id: auth0ClientId,
+        response_type: 'token',
+        scope: 'openid name',
+        redirect_uri: redirectUrl,
+      }),
     });
-    Expo.WebBrowser.openBrowserAsync(redirectionURL);
+
+    console.log(result);
+    if (result.type === 'success') {
+      this.handleParams(result.params);
+    }
   }
 
-  _handleAuth0Redirect = async (event) => {
-    console.log('yo');
-    if (!event.url.includes('+/redirect')) {
+  handleParams = (responseObj) => {
+    if (responseObj.error) {
+      Alert.alert('Error', responseObj.error_description
+        || 'something went wrong while logging in');
       return;
     }
-    Expo.WebBrowser.dismissBrowser();
-    const [, queryString] = event.url.split('#');
-    const responseObj = queryString.split('&').reduce((map, pair) => {
-      const [key, value] = pair.split('=');
-      map[key] = value; // eslint-disable-line
-      return map;
-    }, {});
     const encodedToken = responseObj.id_token;
     const decodedToken = jwtDecoder(encodedToken);
     const username = decodedToken.name;
     this.setState({ username });
-  }
-
-  /**
-   * Converts an object to a query string.
-   */
-  _toQueryString(params) {
-    return '?' + Object.entries(params)
-      .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`)
-      .join('&');
   }
 
   render() {
