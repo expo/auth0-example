@@ -6,6 +6,7 @@ import {
   View,
   Button,
   Linking,
+  AsyncStorage,
 } from 'react-native';
 import jwtDecoder from 'jwt-decode';
 
@@ -35,7 +36,7 @@ class App extends React.Component {
     const redirectionURL = `${auth0Domain}/authorize` + this._toQueryString({
       client_id: auth0ClientId,
       response_type: 'id_token',
-      nonce: 'alongrandomstringtopreventtokenreplayattacks',
+      nonce: await this._getNonce(),
       scope: 'openid name',
       redirect_uri: redirectUri,
       state: redirectUri,
@@ -47,7 +48,7 @@ class App extends React.Component {
     const redirectionURL = `${auth0Domain}/authorize` + this._toQueryString({
       client_id: auth0ClientId,
       response_type: 'id_token',
-      nonce: 'alongrandomstringtopreventtokenreplayattacks',
+      nonce: await this._getNonce(),
       scope: 'openid name',
       redirect_uri: redirectUri,
       connection: 'twitter',
@@ -72,6 +73,26 @@ class App extends React.Component {
     const decodedToken = jwtDecoder(encodedToken);
     const username = decodedToken.name;
     this.setState({ username });
+  }
+
+  /**
+   * Generate a cryptographically random nonce.
+   * @param {Number} length
+   */
+  _generateRandomString(length) {
+    const charset = '0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz-._~';
+    return [...Array(length)]
+      .map(() => charset.charAt(Math.floor(Math.random() * charset.length)))
+      .join('');
+  }
+
+  async _getNonce() {
+    let nonce = await AsyncStorage.getItem('nonce');
+    if (!nonce) {
+      nonce = this._generateRandomString(16);
+      await AsyncStorage.setItem('nonce', nonce);
+    }
+    return nonce;
   }
 
   /**
