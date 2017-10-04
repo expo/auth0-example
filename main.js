@@ -33,7 +33,7 @@ class App extends React.Component {
     Linking.addEventListener('url', this._handleAuth0Redirect.bind(this));
   }
 
-  async _loginWithAuth0() {
+  _loginWithAuth0 = async () => {
     const redirectionURL = `${auth0Domain}/authorize` + this._toQueryString({
       client_id: auth0ClientId,
       response_type: 'id_token',
@@ -45,7 +45,7 @@ class App extends React.Component {
     Expo.WebBrowser.openBrowserAsync(redirectionURL);
   }
 
-  async _loginWithAuth0Twitter() {
+  _loginWithAuth0Twitter = async () => {
     const redirectionURL = `${auth0Domain}/authorize` + this._toQueryString({
       client_id: auth0ClientId,
       response_type: 'id_token',
@@ -58,7 +58,7 @@ class App extends React.Component {
     Expo.WebBrowser.openBrowserAsync(redirectionURL);
   }
 
-  async _handleAuth0Redirect(event) {
+  _handleAuth0Redirect = async (event) => {
     if (!event.url.includes('+/redirect')) {
       return;
     }
@@ -79,14 +79,14 @@ class App extends React.Component {
    * Generate a cryptographically random nonce.
    * @param {Number} length
    */
-  _generateRandomString(length) {
+  _generateRandomString = (length) => {
     const charset = '0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz-._~';
     return [...Array(length)]
       .map(() => charset.charAt(Math.floor(Math.random() * charset.length)))
       .join('');
   }
 
-  async _getNonce() {
+  _getNonce = async () => {
     let nonce = await AsyncStorage.getItem('nonce');
     if (!nonce) {
       nonce = this._generateRandomString(16);
@@ -98,7 +98,7 @@ class App extends React.Component {
   /**
    * Converts an object to a query string.
    */
-  _toQueryString(params) {
+  _toQueryString = (params) => {
     return '?' + Object.entries(params)
       .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`)
       .join('&');
