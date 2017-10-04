@@ -28,11 +28,12 @@ class App extends React.Component {
   state = {
     username: undefined,
   };
+
   componentDidMount() {
     Linking.addEventListener('url', this._handleAuth0Redirect.bind(this));
   }
 
-  _loginWithAuth0 = async () => {
+  async _loginWithAuth0() {
     const redirectionURL = `${auth0Domain}/authorize` + this._toQueryString({
       client_id: auth0ClientId,
       response_type: 'id_token',
@@ -44,7 +45,7 @@ class App extends React.Component {
     Expo.WebBrowser.openBrowserAsync(redirectionURL);
   }
 
-  _loginWithAuth0Twitter = async () => {
+  async _loginWithAuth0Twitter() {
     const redirectionURL = `${auth0Domain}/authorize` + this._toQueryString({
       client_id: auth0ClientId,
       response_type: 'id_token',
@@ -57,8 +58,7 @@ class App extends React.Component {
     Expo.WebBrowser.openBrowserAsync(redirectionURL);
   }
 
-  _handleAuth0Redirect = async (event) => {
-    console.log('yo');
+  async _handleAuth0Redirect(event) {
     if (!event.url.includes('+/redirect')) {
       return;
     }
