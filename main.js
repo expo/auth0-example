@@ -6,6 +6,7 @@ import {
   View,
   Button,
   Linking,
+  AsyncStorage,
 } from 'react-native';
 import jwtDecoder from 'jwt-decode';
 
@@ -27,14 +28,16 @@ class App extends React.Component {
   state = {
     username: undefined,
   };
+
   componentDidMount() {
-    Linking.addEventListener('url', this._handleAuth0Redirect);
+    Linking.addEventListener('url', this._handleAuth0Redirect.bind(this));
   }
 
   _loginWithAuth0 = async () => {
     const redirectionURL = `${auth0Domain}/authorize` + this._toQueryString({
       client_id: auth0ClientId,
-      response_type: 'token',
+      response_type: 'id_token',
+      nonce: await this._getNonce(),
       scope: 'openid name',
       redirect_uri: redirectUri,
       state: redirectUri,
@@ -45,7 +48,8 @@ class App extends React.Component {
   _loginWithAuth0Twitter = async () => {
     const redirectionURL = `${auth0Domain}/authorize` + this._toQueryString({
       client_id: auth0ClientId,
-      response_type: 'token',
+      response_type: 'id_token',
+      nonce: await this._getNonce(),
       scope: 'openid name',
       redirect_uri: redirectUri,
       connection: 'twitter',
@@ -55,7 +59,6 @@ class App extends React.Component {
   }
 
   _handleAuth0Redirect = async (event) => {
-    console.log('yo');
     if (!event.url.includes('+/redirect')) {
       return;
     }
@@ -73,9 +76,29 @@ class App extends React.Component {
   }
 
   /**
+   * Generate a cryptographically random nonce.
+   * @param {Number} length
+   */
+  _generateRandomString = (length) => {
+    const charset = '0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz-._~';
+    return [...Array(length)]
+      .map(() => charset.charAt(Math.floor(Math.random() * charset.length)))
+      .join('');
+  }
+
+  _getNonce = async () => {
+    let nonce = await AsyncStorage.getItem('nonce');
+    if (!nonce) {
+      nonce = this._generateRandomString(16);
+      await AsyncStorage.setItem('nonce', nonce);
+    }
+    return nonce;
+  }
+
+  /**
    * Converts an object to a query string.
    */
-  _toQueryString(params) {
+  _toQueryString = (params) => {
     return '?' + Object.entries(params)
       .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`)
       .join('&');
