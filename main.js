@@ -6,6 +6,7 @@ import {
   StyleSheet,
   Text,
   View,
+  AsyncStorage,
 } from 'react-native';
 import jwtDecoder from 'jwt-decode';
 
@@ -51,6 +52,7 @@ class App extends React.Component {
         client_id: auth0ClientId,
         response_type: 'token',
         scope: 'openid name',
+        nonce: await this.getNonce(),
         redirect_uri: redirectUrl,
       }),
     });
@@ -72,6 +74,23 @@ class App extends React.Component {
     const username = decodedToken.name;
     this.setState({ username });
   }
+
+  generateRandomString = length => {
+    const charset =
+      '0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz-._~';
+    return [...Array(length)]
+      .map(() => charset.charAt(Math.floor(Math.random() * charset.length)))
+      .join('');
+  };
+
+  getNonce = async () => {
+    let nonce = await AsyncStorage.getItem('nonce');
+    if (!nonce) {
+      nonce = this.generateRandomString(16);
+      await AsyncStorage.setItem('nonce', nonce);
+    }
+    return nonce;
+  };
 
   render() {
     return (
