@@ -1,21 +1,9 @@
-First, you need to create your application client on https://auth0.com/, and in the settings you need to add your authorized callback URL. As indicated in the docs, the URL will follow this structure: `https://auth.expo.io/@your-username/your-app-slug`. So in our example, the URL to white list is `https://auth.expo.io/@community/expo-auth0`
+# auth0-example
 
-![Imgur](https://imgur.com/LCWac5g.png)
+Try it at https://expo.io/@community/expo-auth0
 
-Back in your Expo project. Using the `AuthSession` module, you will redirect your user to the Auth0 authorization endpoint. Your authorization endpoint will be the domain name of your client, which you can find in your client settings such as seen in the image above, plus ```/authorize```. So in this example, our authorization URL is ```https://brentvatne.auth0.com/authorize```. The query parameters to be sent can be found here: https://auth0.com/docs/client-auth/mobile-desktop#call-the-authorization-url. The call should be similar to this:
-```javascript
-const result = await AuthSession.startAsync({
-      authUrl:
-        'https://brentvatne.auth0.com/authorize' +
-        toQueryString({
-          connection: 'twitter',
-          client_id: auth0ClientId,
-          response_type: 'token',
-          scope: 'openid name',
-          redirect_uri: redirectUrl,
-        }),
-    })
-```
+## Setup
 
-
-Once successful, the user will be redirected to our app, and `result` will contain all of the data that was returned in the URL. We will need to decoded the ```id_token```, which is a JWT. Once decoded, we will have access to a JSON object containing all of the attributes we previously asked in our authorization call.
+- Create your application client on https://auth0.com/
+- In the application settings you need to add the [AuthSession docs](https://docs.expo.io/versions/latest/sdk/auth-session.html) callback url, which looks something like this: `https://auth.expo.io/@your-username/your-app-slug`. In the app code we have `https://auth.expo.io/@community/expo-auth0` because I am signed in as `@community` and the slug for this app is `expo-auth0`. You will need to replace `community` with your Expo username.
+- Find references to `https://brentvatne.auth0.com/authorize` in `App.js` and replace it with the authorization endpoint for your Auth0 account, which you can see on your Auth0 dashboard.
