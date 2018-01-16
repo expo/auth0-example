@@ -1,4 +1,4 @@
-import Expo, { AuthSession } from 'expo';
+import { AuthSession } from 'expo';
 import React from 'react';
 import {
   Alert,
@@ -9,8 +9,20 @@ import {
 } from 'react-native';
 import jwtDecoder from 'jwt-decode';
 
-const auth0ClientId = 'pdnNOE8axmLRPk6opnr6pSbIxmFJxAlA';
-const auth0Domain = 'https://charlesvinette.auth0.com';
+/*
+  You need to swap out the Auth0 client id and domain with
+  the one from your Auth0 client.
+
+  In your Auth0 clent, you need to also add a url to your authorized redirect urls.
+  For this application, I added https://auth.expo.io/@community/auth0-example because
+  I am signed in as the "community" account on Expo and the slug for this app is "auth0-example".
+  You can open this app in the Expo client and check your logs for "Redirect URL (add this to Auth0)"
+  to see what URL to add if the above is confusing.
+
+  If you use Facebook through Auth0, be sure to follow this guide: https://auth0.com/docs/connections/social/facebook
+*/
+const auth0ClientId = '5SyUscgqrnRJ6WW3Evv5MIZZLfHOQtE9';
+const auth0Domain = 'https://brentvatne.auth0.com';
 
   /**
    * Converts an object to a query string.
@@ -21,13 +33,14 @@ function toQueryString(params) {
     .join('&');
 }
 
-class App extends React.Component {
+export default class App extends React.Component {
   state = {
     username: undefined,
   };
 
   _loginWithAuth0 = async () => {
     const redirectUrl = AuthSession.getRedirectUrl();
+    console.log(`Redirect URL (add this to Auth0): ${redirectUrl}`);
     const result = await AuthSession.startAsync({
       authUrl: `${auth0Domain}/authorize` + toQueryString({
         client_id: auth0ClientId,
@@ -103,5 +116,3 @@ const styles = StyleSheet.create({
     marginTop: 40,
   },
 });
-
-Expo.registerRootComponent(App);

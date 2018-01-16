@@ -1,0 +1,17 @@
+{
+  "expo": {
+    "name": "expo-auth0",
+    "description": "An example project demonstrating the AuthSession module in conjunction with Auth0",
+    "slug": "expo-auth0",
+    "privacy": "public",
+    "sdkVersion": "24.0.0",
+    "version": "2.0.0",
+    "orientation": "portrait",
+    "primaryColor": "#cccccc",
+    "icon": "./icon.png",
+    "splash": {
+      "image": "./splash.png",
+      "resizeMode": "contain"
+    }
+  }
+}
