@@ -45,7 +45,7 @@ export default class App extends React.Component {
       authUrl: `${auth0Domain}/authorize` + toQueryString({
         client_id: auth0ClientId,
         response_type: 'token',
-        scope: 'openid name',
+        scope: 'openid profile', // make sure the OIDC-compliant flag is off in the Client OAuth settings page
         redirect_uri: redirectUrl,
       }),
     });
@@ -63,7 +63,7 @@ export default class App extends React.Component {
         connection: 'twitter',
         client_id: auth0ClientId,
         response_type: 'token',
-        scope: 'openid name',
+        scope: 'openid profile', // make sure the OIDC-compliant flag is off in the Client OAuth settings page
         redirect_uri: redirectUrl,
       }),
     });
