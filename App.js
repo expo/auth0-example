@@ -45,7 +45,7 @@ export default class App extends React.Component {
       authUrl: `${auth0Domain}/authorize` + toQueryString({
         client_id: auth0ClientId,
         response_type: 'token',
-        scope: 'openid name',
+        scope: 'openid profile', // make sure you disable the OIDC compliance flag in the Client OAuth settings
         redirect_uri: redirectUrl,
       }),
     });
