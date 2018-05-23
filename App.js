@@ -20,9 +20,11 @@ import jwtDecoder from 'jwt-decode';
   to see what URL to add if the above is confusing.
 
   If you use Facebook through Auth0, be sure to follow this guide: https://auth0.com/docs/connections/social/facebook
+
+  You also need to disable the OIDC Conformant flag from Auth0's config. (_Your App_ > Settings > Show Advanced Settings > OAuth > OIDC Conformant) for this to work.
 */
-const auth0ClientId = '5SyUscgqrnRJ6WW3Evv5MIZZLfHOQtE9';
 const auth0Domain = 'https://brentvatne.auth0.com';
+const auth0ClientId = '5SyUscgqrnRJ6WW3Evv5MIZZLfHOQtE9';
 
   /**
    * Converts an object to a query string.
@@ -45,7 +47,7 @@ export default class App extends React.Component {
       authUrl: `${auth0Domain}/authorize` + toQueryString({
         client_id: auth0ClientId,
         response_type: 'token',
-        scope: 'openid name',
+        scope: 'openid profile name',
         redirect_uri: redirectUrl,
       }),
     });
