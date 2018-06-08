@@ -44,9 +44,10 @@ export default class App extends React.Component {
     const result = await AuthSession.startAsync({
       authUrl: `${auth0Domain}/authorize` + toQueryString({
         client_id: auth0ClientId,
-        response_type: 'token',
-        scope: 'openid name',
+        response_type: 'id_token token',
+        scope: 'openid profile',
         redirect_uri: redirectUrl,
+        nonce: Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
       }),
     });
 
@@ -62,9 +63,10 @@ export default class App extends React.Component {
       authUrl: `${auth0Domain}/authorize` + toQueryString({
         connection: 'twitter',
         client_id: auth0ClientId,
-        response_type: 'token',
-        scope: 'openid name',
+        response_type: 'id_token token',
+        scope: 'openid profile',
         redirect_uri: redirectUrl,
+        nonce: Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
       }),
     });
 
