@@ -1,17 +1,29 @@
 {
   "expo": {
-    "name": "expo-auth0",
-    "description": "An example project demonstrating the AuthSession module in conjunction with Auth0",
-    "slug": "expo-auth0",
+    "name": "auth0-example",
+    "slug": "auth0-example",
     "privacy": "public",
-    "sdkVersion": "24.0.0",
-    "version": "2.0.0",
+    "sdkVersion": "32.0.0",
+    "platforms": [
+      "ios",
+      "android"
+    ],
+    "version": "1.0.0",
     "orientation": "portrait",
-    "primaryColor": "#cccccc",
-    "icon": "./icon.png",
+    "icon": "./assets/icon.png",
     "splash": {
-      "image": "./splash.png",
-      "resizeMode": "contain"
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true
     }
   }
 }
