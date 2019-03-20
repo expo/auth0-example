@@ -14,6 +14,18 @@
 ## Example
 Feel free to run the example and test it yourself, and read through [App.js](App.js) to better understand how it works.
 
+If you are using NPM:
+```
+npm install
+npm start
+```
+
+If you are using yarn:
+```
+yarn install
+yarn start
+```
+
 Make sure to replace the `auth0ClientId` and `auth0Domain` values with the ones from your Auth0 application.
 
 ![Application Settings](images/image-1.jpeg)
