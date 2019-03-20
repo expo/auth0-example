@@ -1,4 +1,5 @@
 # auth0-example
+Credits to @brentvatne for creating the original version two years ago.
 
 ## Setup
 * Create your own application client on [Auth0](https://auth0.com).
